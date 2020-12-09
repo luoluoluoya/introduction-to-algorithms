@@ -1,0 +1,15 @@
+./.idea
+./mai
+./cmake-build-debug
+./CMakeFiles
+./CMakeLists.txt
+.idea/.gitignore
+.idea/.name
+.idea/algorithm.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+CMakeFiles/
+CMakeLists.txt
+cmake-build-debug/
+main.cpp
