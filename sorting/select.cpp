@@ -28,8 +28,8 @@
 
 // A[lo, hi) 中寻找最大值
 template<typename T>
-static size_t findMax(T input[], size_t lo, size_t hi) {
-    size_t pos = hi-1; T max = input[pos];
+static int findMax(T input[], int lo, int hi) {
+    int pos = hi-1; T max = input[pos];
     for (int i = pos-1; i >= lo; --i) {
         if (max < input[i]) {
             max = input[i];
@@ -40,9 +40,9 @@ static size_t findMax(T input[], size_t lo, size_t hi) {
 }
 
 template<typename T>
-void selectSort(T input[], size_t s) {
+void selectSort(T input[], int s) {
     for (int i = s; i > 0; --i) {
-        size_t t = findMax(input, 0, i);
+        int t = findMax(input, 0, i);
         std::swap( input[i-1], input[ t ] );
     }
 }
