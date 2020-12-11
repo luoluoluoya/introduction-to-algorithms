@@ -75,6 +75,7 @@ s[s[1,n]+1,n]指出了计算A(s[1,n]+1..n)时应进行的最后一次矩阵乘�
         printf );
 */
 
+const int M = 7;// M等于矩阵链的长度
 /*
     问题输入：
         int * matrixes: 输入矩阵链，第 i 个矩阵的大小为 matrixes[i-1]*matrixes[i];  (故: matrixes.size() = length + 1)
@@ -83,8 +84,34 @@ s[s[1,n]+1,n]指出了计算A(s[1,n]+1..n)时应进行的最后一次矩阵乘�
         s: 保存矩阵链[i, j]的括号切分位置;
     输出：
         当前矩阵的最少乘法数
- */
-const int M = 7;// M等于矩阵链的长度
+*/
+
+// 带备忘录的自顶向下递归求解
+int doRecursive(int *matrixes, int p, int q, int m[][M], int s[][M]) {    // 求解矩阵链A[p,q]
+    assert(p <= q);
+    if (m[p][q] >= 0)   // 备忘录
+        return m[p][q];
+    m[p][q] = INT_MAX;
+    for (int i = p; i < q; ++i) {
+        int v = doRecursive(matrixes, p, i, m, s) + doRecursive(matrixes, i+1, q, m, s) + matrixes[p-1]*matrixes[i]*matrixes[q];
+        if (v < m[p][q]) {
+            m[p][q] = v;
+            s[p][q] = i;
+        }
+    }
+    return m[p][q];
+}
+void matrixChainOrderRecursive(int *matrixes, int length, int m[][M], int s[][M]) {
+    int len = length-1; // 矩阵个数为 matrixes.size()-1
+    for (int i = 1; i <= len; ++i) {
+        for (int j = 0; j <= len; ++j)
+            m[i][j] = INT_MIN;
+        m[i][i] = 0;
+    }
+    doRecursive(matrixes, 1, len, m, s);
+}
+
+// 自底向上求解策略
 void matrixChainOrder(int *matrixes, int length, int m[][M], int s[][M]) {
     int len = length-1;                          // 矩阵个数为 matrixes.size()-1
     for (int x = 1; x <= len; ++x) m[x][x] = 0;  // 长度为1的矩阵链乘：0
