@@ -88,7 +88,6 @@ const int M = 7;// M等于矩阵链的长度
 
 // 带备忘录的自顶向下递归求解
 int doRecursive(int *matrixes, int p, int q, int m[][M], int s[][M]) {    // 求解矩阵链A[p,q]
-    assert(p <= q);
     if (m[p][q] >= 0)   // 备忘录
         return m[p][q];
     m[p][q] = INT_MAX;
@@ -102,6 +101,7 @@ int doRecursive(int *matrixes, int p, int q, int m[][M], int s[][M]) {    // 求
     return m[p][q];
 }
 void matrixChainOrderRecursive(int *matrixes, int length, int m[][M], int s[][M]) {
+    assert(length == M);
     int len = length-1; // 矩阵个数为 matrixes.size()-1
     for (int i = 1; i <= len; ++i) {
         for (int j = 0; j <= len; ++j)
@@ -113,6 +113,7 @@ void matrixChainOrderRecursive(int *matrixes, int length, int m[][M], int s[][M]
 
 // 自底向上求解策略
 void matrixChainOrder(int *matrixes, int length, int m[][M], int s[][M]) {
+    assert(length == M);
     int len = length-1;                          // 矩阵个数为 matrixes.size()-1
     for (int x = 1; x <= len; ++x) m[x][x] = 0;  // 长度为1的矩阵链乘：0
     for (int l = 2; l <= len; ++l) {             // 长度从 2 到 length-1 进行考察
