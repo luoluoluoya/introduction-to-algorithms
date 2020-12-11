@@ -18,14 +18,12 @@
         r(n) = max( p(i) + r(n-i) ); ( i in [0, n) )
         在此公式中，原问题的最优解只包含一个相关子问题(右端剩余部分)的解，而不是两个。
 伪代码
-```
  cutRod(p:价格表， n:钢条长度):
     if ( n<=0 ) return 0;
     q = INT_MIN;
     for i = 0 1 to n:
         q = std::max( q, p(i) + curRod(p, n-i) );
     return q;
-```
 
 CUT-ROD反复地用相同的参数值对自身进行 递归调用，即它反复求解相同的子间题。
 对于长度为n的钢条，CUT-ROD显然考察了所有$2^{n-1}$种可能的切割方案。递归调用树中共有$2^{n-1}$个叶结点，每个叶结点对应一种可能的钢条切割方案。
@@ -90,82 +88,99 @@ EXTENDED-BUTTOM-UP-CUT-ROD(p:价格表, n:钢条长度)
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <iostream>
 
 /*
-    算法接受价格表 priceList 和长度length，长度为i的钢条的对应价格为: priceList[i-1];
-    算法返回最大的拆分价格和位置记录信息
+输入：
+    价格表 priceList： 长度为 len 的钢条的价格为 priceList[len-1]
+    待切割钢条长度 len
+    切割位置向量 places
+输出：
+    当前最优切割的最大价值
+*/
 
- */
+//索引位置和价格的存储统一左移一位
+inline static double getPrice(const std::vector<double>& priceList, int length) { // 从价格表获取价格
+    auto p =  length > 0 ? priceList[length-1] : 0;
+    return p;
+}
+inline static double getPlace(const std::vector<int>& places, int length) {   // 从价格表获取价格
+    return  length > 0 ? places[length-1] : 0;
+}
 
+// 打印拆分位置
+static void printCuttingPoint(const std::vector<int>& places, int length) {
+    std::cout << "长度为" << length << "的一个最大切割方案为: ";
+    while (length > 0) {
+        std::cout << getPlace(places, length) << " ";
+        length-=getPlace(places, length);
+    }
+    std::cout << std::endl;
+}
 
-// 普通分治算法
-double cutRod(const std::vector<double>& priceList, const int& length) {
+// 普通递归
+double cutRod(const std::vector<double>& priceList, int length, std::vector<int>& places) {
     assert(priceList.size() >= length);
-    if (length <= 0)
-        return 0;
-    std::vector<int> places; places.resize(length+1);
+    if (length <= 0) return 0;  // 递归基
+    int pos = length;
     double q = INT_MIN;
     for (int i = 1; i <= length; ++i) {
-        if ( q < priceList[i-1] + cutRod(priceList, length-i) ) {
-            q = priceList[i-1] + cutRod(priceList, length-i);
-            places[i-1] = i;
+        auto p = getPrice(priceList, i) + cutRod(priceList, length-i, places);
+        if (q < p) {
+            q = p;
+            pos = i;
         }
     }
+    places[length-1] = pos;
     return q;
 }
 
 // 自顶向下过程，加入了备忘机制
-double memoizedCutRodAux(const std::vector<double>& priceList, std::vector<double>& memo, const int& length) {
+double memoizedCutRodAux(const std::vector<double>& priceList, const int& length, std::vector<int>& places, std::vector<double>& memo) {
     if (memo[length] >= 0)
-        return memo[length];
+        return memo[length];   // 包含 len=0 的递归基
+    int pos = length;
     double q = (length > 0) ? INT_MIN : 0;
     for (int i = 1; i <= length; ++i) {
-        q = std::max(q, priceList[i-1] + memoizedCutRodAux(priceList, memo, length-i));
+        auto p = getPrice(priceList, i) + memoizedCutRodAux(priceList, length-i, places, memo);
+        if (q < p) {
+            q = p;
+            pos = i;
+        }
     }
     memo[length] = q;
+    places[length-1] = pos;
     return q;
 }
-
-double memoizedCutRod(const std::vector<double>& priceList, const int& length) {
+double memoizedCutRod(const std::vector<double>& priceList, const int& length, std::vector<int>& places) {
     assert(priceList.size() >= length);
-    std::vector<double> memo;
+    std::vector<double> memo;   // 长度为i的钢条的最好切割价格
     memo.resize(length+1);
     for (int i = 0; i < length+1; ++i)
         memo[i] = INT_MIN;
-    return memoizedCutRodAux(priceList, memo, length);
-}
-
-static void printCuttingPoint(const std::vector<int>& places, int length) {
-    while (length > 0) {
-        printf("%d ", places[length-1])   ;
-        length = length - places[length-1];
-    }
-    printf("\n");
+    return memoizedCutRodAux(priceList, length, places, memo);
 }
 
 // 自底向上算法
-double buttonCutRod(std::vector<double> priceList, const int& length) {
+double buttonCutRod(const std::vector<double>& priceList, const int& length, std::vector<int>& places) {
     assert(priceList.size() >= length);
     // 制表
-    std::vector<double> memo;
+    std::vector<double> memo;   // 长度为i的钢条的最好切割价格 memo[i]
     memo.resize(length+1);
     for (int i = 1; i < length+1; ++i)
         memo[i] = INT_MIN;
     memo[0] = 0;
-    // 位置
-    std::vector<int> places; places.resize(length);;
     // 求解
     for (int i = 1; i <= length; ++i) {
         double q = INT_MIN;
         for (int j = 1; j <= i; ++j) {
-            if ( q < priceList[i-1] + memo[i-j] ) {
-                q = priceList[i-1] + memo[i-j];
+            auto p = getPrice(priceList, j) + memo[i-j];
+            if ( q <  p) {
+                q = p;
                 places[i-1] = j;
             }
         }
         memo[i] = q;
     }
-    printCuttingPoint(places, length);
     return memo[length];
 }
-
