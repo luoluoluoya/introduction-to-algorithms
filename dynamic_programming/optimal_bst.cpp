@@ -66,50 +66,27 @@
 
 #include <cassert>
 #include <iostream>
-const int N = 5; // todo N等于关键字的个数
-double e[N+2][N+1];
-int root[N+1][N+1];
-int w[N+2][N+1];
+#include <algorithm>
 
-// 构造一个简单的二叉树
-template <typename T>
-struct binNode {
-    typedef binNode* NodePointer;
-    T data;
-    double freq;
-    NodePointer lc, rc, parent;
-    binNode(T d = T(), double f = 0):data(d),freq(f) { }
-};
-template <typename T>
-struct OptimalBst {
-};
+#define N 5
+float e[N + 2][N + 1];
+int root[N + 1][N + 1];     // e[i,j]即包含节点[i~j]的最优二叉搜索树； 考虑E需要保存左右子树为空的情况，故行比列多1: (1,0),(n+1, n)
+float w[N + 2][N + 1];      // root[i,j]即包含节点[i~j]的最优二叉搜索树的根节点
 
-
-/**
- * @param p         节点出现频率：前置补0， 故第i个节点的概率为 p[i]; 故 p.size = q.size
- * @param q         第i个节点左侧概率为q[i-1]， 右侧为q[i]
- * @param num       节点个数: num+1 =p.size=q.size
- * @param e         e[i,j]即包含节点[i~j]的最优二叉搜索树； 考虑E需要保存左右子树为空的情况，故行比列多1: (1,0),(n+1, n)
- * @param root      root[i,j]即包含节点[i~j]的最优二叉搜索树的根节点
- */
-void analyzeOptimalBst(float p[], float q[], int num) {
-    assert(num == N);
-
-    for (int i = 1; i <= num+1; ++i) {         //左子树为空的初始化
-        e[i][i-1] = q[i-1];
-        w[i][i-1] = q[i-1];
+void analyzeOptimalBst(float p[], float q[]) {
+    for (int i = 1; i <= N + 1; i++) {
+        e[i][i - 1] = q[i - 1];
+        w[i][i - 1] = q[i - 1];
     }
-    // 考察长度 l 为 1 ～ n 的 num-l+1 个元素 A[i, j], 取最优解
-    for (int l = 1; l <= num; ++l) {
-        for (int i = 1; i <= num-l+1; ++i) {
-            int j = i+l-1;
+    for (int l = 1; l <= N; l++) {
+        for (int i = 1; i <= N - l + 1; i++) {
+            int j = i + l - 1;
             e[i][j] = INT_MAX;
-            auto tw = w[i][j-1]+p[j]+q[j];
-            w[i][j] = tw;
-            for (int r = i; r <= j; ++r) {
-                double m = e[i][r-1] + e[r+1][j] + w[i][j];
-                if (m < e[i][j]) {
-                    e[i][j] = m;
+            w[i][j] = w[i][j - 1] + p[j] + q[j];
+            for (int r = i; r <= j; r++) {
+                double t = e[i][r - 1] + e[r + 1][j] + w[i][j];
+                if (t < e[i][j]) {
+                    e[i][j] = t;
                     root[i][j] = r;
                 }
             }
@@ -117,14 +94,73 @@ void analyzeOptimalBst(float p[], float q[], int num) {
     }
 }
 
-void printOptimalBst(int i, int j) {
-    if(i==1 && j==N)
-        std::cout<<"root is "<<root[i][j]<<std::endl;
-    if(i<j) {
-        int r=root[i][j];
-        if(i!=r)
-            std::cout<<"left child root "<<root[i][r-1]<<std::endl;
-        if(j!=r)
-            std::cout<<"right child root "<<root[r+1][j]<<std::endl;
+// 打印跟节点表
+void printRootTable() {
+    std::cout << "各子树的根：" << std::endl;
+    for (int i = 1; i <= N; i++) {
+        for (int j = 1; j <= N; j++)
+            std::cout << "Root A[" << i << "][" << j << "]:" << root[i][j] << "\t";
+        std::cout << std::endl;
     }
 }
+
+// 前序遍历树结构
+void prevTravelBst(int i, int j) {
+    if (i <= j) {
+        int r = root[i][j];
+        std::cout << r << "\t";
+        prevTravelBst(i, r - 1);
+        prevTravelBst(r + 1, j);
+    }
+}
+
+// 打印树
+void printBst(int i, int j) {
+    if (i == 1 && j == N)
+        std::cout << "Bst Root is: " << root[i][j] << std::endl;
+    if (i < j) {
+        int r = root[i][j];
+        if (i != r)
+            std::cout << "Left Child Root: " << root[i][r - 1] << std::endl;
+        printBst(i, root[i][j] - 1);
+        if (j != r)
+            std::cout << "Right Child Root: " << root[r + 1][j] << std::endl;
+        printBst(root[i][j] + 1, j);
+    }
+}
+
+
+// 构造一个简单的二叉树
+template<typename T>
+struct binNode {
+    typedef binNode *NodePointer;
+    T data;
+    double freq;
+    NodePointer lc, rc, parent;
+    binNode(T d = T(), double f = 0) : data(d), freq(f) {}
+};
+
+template <typename T>
+class OptimalBst {
+public:
+    typedef typename binNode<T>::NodePointer NodePointer;
+    OptimalBst():_root(nullptr),_hot(nullptr),_size(0) { }
+    OptimalBst(std::initializer_list<NodePointer> initList){
+
+    }
+    NodePointer search(const T&val);
+    bool insert(const T&val);
+    bool remove(const T&val);
+private:
+    NodePointer _root, _hot;
+    size_t _size;
+};
+
+//template <typename T>
+//typename OptimalBst<T>::NodePointer OptimalBst<T>::search(const T &val) {}
+//template <typename T>
+//bool OptimalBst<T>::insert(const T &val) {}
+//template <typename T>
+//OptimalBst<T>
+//template <typename T>
+//OptimalBst<T>
