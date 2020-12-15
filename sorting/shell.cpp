@@ -64,8 +64,8 @@ h-有序与h-排序
 
 template<typename T>
 void shellSort(T input[], size_t size) {
-    for (int w = size/2; w > 0; w>>=1) {
-        for (int i = 0, j=i-w; i < size; i+=w,j=i-w) {
+    for (int w = size/2; w > 0; w>>=1) {                    // 递减增量（不断缩减矩阵的宽度，直至剩下一列）
+        for (int i = 0, j=i-w; i < size; i+=w,j=i-w) {      // 以i + xw将原输入序列映射到矩阵中； 底层采用插入排序算法
             T x = input[i];
             while (j > -1 && input[j] > x) {
                 input[j+w] = input[j];
