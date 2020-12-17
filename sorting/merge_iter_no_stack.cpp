@@ -113,4 +113,5 @@ void mergeSortIter(T input[], size_t size) {
         }
         if (!p) break;
     }
+    release(root);
 }
