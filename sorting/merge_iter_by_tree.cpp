@@ -15,8 +15,8 @@
  *      2. 数据结构：需要借助一些数据结构来帮助确认当前的访问位置信息 (堆栈/颜色...)
  * 利用堆栈
  *  1. 从当前节点沿最左侧路径深入，直到最左侧节点： 对于每个节点，将当前节点入栈，若右子树存在，则将右子树节点入栈，若左子树存在，则将左子树节点入栈。
- *  2. 执行出栈，访问当前元素
- *      1. 出栈节点为跟节点，算法终止
+ *  2. 执行出栈
+ *      1. 出栈节点为跟节点，访问当前元素，算法终止
  *      2. 出栈节点是否为左子节点
  *          a. Y：从步骤2开始执行
  *          b. N：从步骤1开始执行
@@ -37,9 +37,10 @@
  */
 
 #include <utility>
+#include "merge_subroutine.cpp"
 
 
-/** 不使用堆栈， 模仿树结构后续遍历实现 */
+/** 模拟树结构的后续遍历实现归并排序算法 */
 
 struct MergeNode {
     std::pair<size_t, size_t> border;
@@ -68,24 +69,6 @@ static void release(MergeNode* node) {
     delete node;
 }
 
-// todo 同 merge.cpp 中的merge算法
-template<typename T>
-void merge(T* input, size_t lo, size_t mid, size_t hi) {
-    int ls = mid - lo, rs = hi - mid;
-    T* L = new T[ls];
-    for (int i = 0; i < ls; ++i)
-        L[i] = input[lo+i];
-    T* R = input+mid;
-    for (int j = lo, p = 0, q = 0; p < ls || q < rs; ++j) {
-        // 当 R 元素移除完成或者当前 L首元素存在且不大于 R 首元素时，挪动当前元素
-        if ( q >= rs || (p < ls && L[p] <= R[q]) )
-            input[j] = L[p++];
-        else
-            input[j] = R[q++];
-    }
-    delete[] L;
-}
-
 MergeNode* rightBrother(MergeNode* p) {
     if (p->parent && p->parent->lc == p)
         return p->parent->rc;
@@ -93,7 +76,7 @@ MergeNode* rightBrother(MergeNode* p) {
 }
 
 template<typename T>
-void mergeSortIter(T input[], size_t size) {
+void mergeSortByTree(T input[], size_t size) {
     MergeNode* root = new MergeNode(0, size); bool backtrace = false;
     MergeNode* p = root;
     while (true) {

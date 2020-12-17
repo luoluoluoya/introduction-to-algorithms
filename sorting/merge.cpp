@@ -56,23 +56,7 @@
 稳定性： 稳定; (merge算法稳定则mergeSort稳定)
 */
 
-//     int arr[] = {7, 4, 2, 3, 8, 1, 6,9};
-template<typename T>
-void merge(T* input, size_t lo, size_t mid, size_t hi) {
-    int ls = mid - lo, rs = hi - mid;
-    T* L = new T[ls];
-    for (int i = 0; i < ls; ++i)
-        L[i] = input[lo+i];
-    T* R = input+mid;
-    for (int j = lo, p = 0, q = 0; p < ls || q < rs; ++j) {
-        // 当 R 元素移除完成或者当前 L首元素存在且不大于 R 首元素时，挪动当前元素
-        if ( q >= rs || (p < ls && L[p] <= R[q]) )
-            input[j] = L[p++];
-        else
-            input[j] = R[q++];
-    }
-    delete[] L;
-}
+#include "merge_subroutine.cpp"
 
 template<typename T>
 void mergeSort(T* input, size_t lo, size_t hi) {
