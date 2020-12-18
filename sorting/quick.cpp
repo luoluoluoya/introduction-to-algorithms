@@ -57,17 +57,8 @@
 
 #include <algorithm>
 #include <random>
-
-template<typename T>
-size_t partition(T A[], size_t b, size_t e) {
-    int j = b - 1;
-    for (int i = b; i < e - 1; ++i)
-        if (A[i] <= A[e - 1]) {
-            std::swap(A[i], A[++j]);
-        }
-    std::swap(A[++j], A[e-1]);
-    return j;
-}
+#include <random>
+#include "partition.cpp"
 
 template<typename T>
 void quickSort(T A[], size_t b, size_t e) {
@@ -76,13 +67,6 @@ void quickSort(T A[], size_t b, size_t e) {
     size_t r = partition(A, b, e);
     quickSort(A, b, r);
     quickSort(A, r + 1, e);
-}
-
-template<typename T>
-size_t random_partition(T A[], size_t b, size_t e) {
-    size_t r = b+random() % (e-b);
-    std::swap(A[e-1], A[r]);
-    return partition(A, b, e);
 }
 
 template<typename T>
