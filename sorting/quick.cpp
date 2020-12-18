@@ -55,10 +55,10 @@
         random-quickSort(A, 0, A.size);
 */
 
+#include "partition.cpp"
+#include "quick_iter_by_stack.cpp"
 #include <algorithm>
 #include <random>
-#include <random>
-#include "partition.cpp"
 
 template<typename T>
 void quickSort(T A[], size_t b, size_t e) {

@@ -29,8 +29,6 @@
  * 若 lo 节点处于 [m, e) 之间时，证明当前迭代有部分元素未就绪，但这部分元素在上轮迭代中已就绪。故直接跳过
  */
 
-#include "merge_subroutine.cpp"
-
 template<typename T>
 void mergeSortIter(T input[], size_t size) {
     for (int step = 1; step < size; step*=2) {

@@ -57,6 +57,8 @@
 */
 
 #include "merge_subroutine.cpp"
+#include "merge_iter.cpp"
+#include "merge_iter_by_tree.cpp"
 
 template<typename T>
 void mergeSort(T* input, size_t lo, size_t hi) {
