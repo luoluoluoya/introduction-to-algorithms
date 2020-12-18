@@ -57,8 +57,7 @@
 
 #include "partition.cpp"
 #include "quick_iter_by_stack.cpp"
-#include <algorithm>
-#include <random>
+#include "quick_iter_by_tree.cpp"
 
 template<typename T>
 void quickSort(T A[], size_t b, size_t e) {

@@ -25,7 +25,7 @@ typedef std::pair<size_t,size_t> Border;
 
 
 template<typename T>
-void quickSortIter(T A[], const size_t& size) {
+void quickSortByStack(T A[], const size_t& size) {
     size_t lo = 0, hi = size;
     Border border = {lo, hi}; std::stack<Border> S; S.push(border);
     while (!S.empty()) {
