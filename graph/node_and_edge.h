@@ -6,6 +6,7 @@
 #define ALGORITHM_NODE_AND_EDGE_H
 
 #include <climits>
+#include <cstddef>
 
 enum NodeStatus {undiscovered, discovered, visited };
 enum EdgeType { undetermined, tree, froward, backword, cross };

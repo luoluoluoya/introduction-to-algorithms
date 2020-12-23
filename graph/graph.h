@@ -9,6 +9,8 @@
 #define MAX_EDGE_NUM 50*49
 
 #include <climits>
+#include <cstddef>
+#include <cassert>
 #include "node_and_edge.h"
 
 /**后续实现都是使用静态表实现**/
