@@ -79,7 +79,7 @@ public:
     }
     //顶点u的（相对于顶点v的）下一邻接顶点
     int nextNbr(size_t u, size_t v) const {
-        assert(nodes[u] && nodes[v]);
+        assert(nodes[u]);
         int i = v-1;
         while (i >= 0 && !edges[u][i]) i--;
         return i;
