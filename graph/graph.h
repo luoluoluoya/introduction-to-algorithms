@@ -5,8 +5,11 @@
 #ifndef ALGORITHM_GRAPH_H
 #define ALGORITHM_GRAPH_H
 
-#define MAX_NODE_NUM 50
-#define MAX_EDGE_NUM 50*49
+//#define MAX_NODE_NUM 50
+//#define MAX_EDGE_NUM 50*49
+
+#define MAX_NODE_NUM 5
+#define MAX_EDGE_NUM 5*4
 
 #include <climits>
 #include <cstddef>
@@ -51,14 +54,14 @@ public:
 protected:
     size_t nodeNum, edgeNum;    //顶点总数, 边总数
     void reset() {
-        for (int i = 0; i < nodeNum; i++) {
+        for (int i = 0; i < MAX_NODE_NUM; i++) {
             // 顶点
             status(i) = undiscovered;
             dTime(i) = fTime(i) = 0;
             parent(i) = -1;
             priority(i) = INT_MAX;
             // 边
-            for (int j = 0; j < nodeNum; ++j) {
+            for (int j = 0; j < MAX_NODE_NUM; ++j) {
                 if (exists(i, j)) type(i, j) = undetermined;
             }
         }

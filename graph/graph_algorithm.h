@@ -11,6 +11,7 @@
  * 图算法
  */
 class GraphAlgorithm {
+public:
     /**图的遍历**/
     //广度优先搜索算法
     template<typename T> void bfs(Graph<T> *graph, size_t s);

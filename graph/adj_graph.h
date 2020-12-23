@@ -92,7 +92,7 @@ public:
     int nextNbr(size_t u, size_t v) const {
         assert(0 <= u && u < MAX_NODE_NUM && nodes[u] && 0 <= v && v < MAX_NODE_NUM);
         auto p = getEdge(u, v);
-        return p ? p->pos : -1;
+        return p && p->next ? p->next->pos : -1;
     }
     //顶点u的状态
     NodeStatus& status(size_t u) {
