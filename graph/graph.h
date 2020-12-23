@@ -13,8 +13,6 @@
 #include <cassert>
 #include "node_and_edge.h"
 
-#include_next "graph_algorithm.h"
-
 /**后续实现都是使用静态表实现**/
 
 /**
@@ -66,5 +64,7 @@ protected:
         }
     }
 };
+
+#include_next "graph_algorithm.h"
 
 #endif //ALGORITHM_GRAPH_H
