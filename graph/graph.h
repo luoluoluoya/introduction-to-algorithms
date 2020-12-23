@@ -59,21 +59,21 @@ public:
 
     /**打印图的详细信息**/
     void print() {
-        printf("=======================================打印当前图信息==========================================\n");
+        printf("=======================================Print Graph Info==========================================\n");
         for (int i = 0; i < MAX_NODE_NUM; ++i) {
             if (exists(i)) {
-                printf("节点位置: %d, 入度: %d, 出度: %d, 父节点: %d, dTime: %d, fTime: %d, 优先级: %d \n", i, inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
+                printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d \n", i, inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
                 if (outDegree(i)) {
                     for (int j = 0; j < MAX_NODE_NUM; ++j) {
                         if (exists(i, j)) {
-                            const char *etype = type(i, j) == undetermined ? "未定义" : ( type(i, j) == tree ? "树边" : ( type(i, j) == froward ? "前向边" : ( type(i, j) == backword ? "后向边" : "跨边" ) ) );
-                            printf("\t Edge(%d,%d) 权重为: %d, 边类型为: %s \n", i, j, weight(i, j), etype);
+                            const char *etype = type(i, j) == undetermined ? "undetermined" : ( type(i, j) == tree ? "tree" : ( type(i, j) == froward ? "froward" : ( type(i, j) == backword ? "backword" : "cross" ) ) );
+                            printf("\t Edge(%d,%d) weight: %d, type: %s \n", i, j, weight(i, j), etype);
                         }
                     }
                 }
             }
         }
-        printf("=======================================打印图信息结束==========================================\n");
+        printf("=======================================Print End==========================================\n");
     }
 protected:
     size_t nodeNum, edgeNum;    //顶点总数, 边总数

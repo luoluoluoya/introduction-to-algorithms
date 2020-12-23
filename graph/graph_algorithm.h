@@ -20,9 +20,6 @@ public:
     //优先级搜索框架
     template<typename T, typename PU> void pfs(Graph<T> *graph, PU pu, size_t s);
 
-    /**图的转置**/
-    template<typename T> Graph<T>* reverse(Graph<T> *graph);
-
     /**强联通分量**/
     //获取强联通分量
     template<typename T> void bcc(Graph<T> *graph, size_t s);

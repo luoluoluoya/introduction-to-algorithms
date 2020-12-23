@@ -112,6 +112,20 @@ public:
         edges[u][v] = new GraphEdge(w);
         ++this->edgeNum; ++nodes[u]->outDegree; ++nodes[v]->inDegree;
     }
+
+    /**图的转置**/
+    virtual Graph<Tv>* reverse() {
+        MatrixGraph<Tv>* newGraph = new MatrixGraph<Tv>();
+        newGraph->nodeNum = this->nodeNum;
+        for (int u = 0; u < MAX_NODE_NUM; ++u)
+            if (exists(u))
+                newGraph->nodes[u] = new GraphNode<Tv>(vertex(u));
+        for (int u = 0; u < MAX_NODE_NUM; ++u)
+            for (int v = 0; v < MAX_NODE_NUM; ++v)
+                if (exists(u, v))
+                    newGraph->insert(v, u, weight(u, v));
+        return newGraph;
+    }
 private:
     void init () {
         for (int i; i < MAX_NODE_NUM; ++i) {
