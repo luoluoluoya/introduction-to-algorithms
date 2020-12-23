@@ -92,6 +92,6 @@ protected:
     }
 };
 
-#include_next "graph_algorithm.h"
+//#include_next "./graph_algorithm.h"
 
 #endif //ALGORITHM_GRAPH_H
