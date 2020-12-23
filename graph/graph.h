@@ -5,12 +5,24 @@
 #ifndef ALGORITHM_GRAPH_H
 #define ALGORITHM_GRAPH_H
 
+#define MAX_NODE_NUM 5
+#define MAX_EDGE_NUM 5
+
 #include <climits>
 #include "node_and_edge.h"
 
+/**后续实现都是使用静态表实现**/
+
+/**
+ * 图结构抽象接口
+ *
+ * @tparam Tv
+ */
 template<typename Tv>
 class Graph {
 public:
+    Graph():nodeNum(0),edgeNum(0) {}
+
     int vSize() const { return nodeNum; }
     int eSize() const { return edgeNum; }
 

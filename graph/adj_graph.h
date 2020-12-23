@@ -5,9 +5,6 @@
 #ifndef ALGORITHM_ADJ_GRAPH_H
 #define ALGORITHM_ADJ_GRAPH_H
 
-#define MAX_NODE_NUM 5
-#define MAX_EDGE_NUM 5
-
 #include "graph.h"
 
 //边表节点
@@ -28,16 +25,27 @@ struct AdjNode: public GraphNode<Tv> {
     }
 };
 
+/**
+ * 领接表实现
+ *
+ * @tparam Tv
+ */
 template <class Tv>
 class AdjGraph:public Graph<Tv> {
 public:
     typedef AdjNode<Tv>* NodePointer;
     AdjGraph()=default;
-    AdjGraph(const Tv arr[], const size_t& size) {
+    AdjGraph(Tv const arr[], const size_t& size) {
         this->nodeNum = size;
         for (int i = 0; i < size; ++i)
             nodes[i] = new AdjNode<Tv>(arr[i], nullptr);
     }
+    ~AdjGraph() {
+        for (int i = 0; i < MAX_NODE_NUM; ++i)
+            if (nodes[i])
+                delete nodes[i];
+    }
+    
     /**顶点*/
     //插入顶点，返回编号
     size_t insert(Tv const& e) {
