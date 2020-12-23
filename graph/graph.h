@@ -5,8 +5,8 @@
 #ifndef ALGORITHM_GRAPH_H
 #define ALGORITHM_GRAPH_H
 
-#define MAX_NODE_NUM 5
-#define MAX_EDGE_NUM 5
+#define MAX_NODE_NUM 50
+#define MAX_EDGE_NUM 50*49
 
 #include <climits>
 #include "node_and_edge.h"
