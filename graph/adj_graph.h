@@ -47,6 +47,7 @@ public:
     }
     
     /**顶点*/
+    bool exists(size_t u) const { assert(u < MAX_NODE_NUM); return nodes[u]; }
     //插入顶点，返回编号
     size_t insert(Tv const& e) {
         assert(this->nodeNum < MAX_NODE_NUM);

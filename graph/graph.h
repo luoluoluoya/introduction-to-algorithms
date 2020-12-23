@@ -12,6 +12,7 @@
 #define MAX_EDGE_NUM 5*4
 
 #include <climits>
+#include <iostream>
 #include <cstddef>
 #include <cassert>
 #include "node_and_edge.h"
@@ -33,6 +34,7 @@ public:
     int eSize() const { return edgeNum; }
 
     /**顶点*/
+    virtual bool exists(size_t u) const = 0;        //节点u是否存在
     virtual size_t insert(Tv const &) = 0;          //插入顶点，返回编号
     virtual Tv remove(size_t) = 0;                  //删除顶点及其关联边，返回该顶点信息
     virtual Tv &vertex(size_t) = 0;                 //顶点u的数据（该顶点的确存在）
@@ -51,6 +53,25 @@ public:
     virtual int &weight(size_t u, size_t v) = 0;    //边(u,v)的权重
     virtual bool exists(size_t u, size_t v) const = 0;      //边(u,v)是否存在
     virtual void insert(size_t u, size_t v, int w) = 0;     //在顶点u和u之间插入权重为w的边e
+
+    /**打印图的详细信息**/
+    void print() {
+        printf("=======================================打印当前图信息==========================================\n");
+        for (int i = 0; i < MAX_NODE_NUM; ++i) {
+            if (exists(i)) {
+                printf("节点位置: %d, 入度: %d, 出度: %d, 父节点: %d, dTime: %d, fTime: %d, 优先级: %d \n", i, inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
+                if (outDegree(i)) {
+                    for (int j = 0; j < MAX_NODE_NUM; ++j) {
+                        if (exists(i, j)) {
+                            const char *etype = type(i, j) == undetermined ? "未定义" : ( type(i, j) == tree ? "树边" : ( type(i, j) == froward ? "前向边" : ( type(i, j) == backword ? "后向边" : "跨边" ) ) );
+                            printf("\t Edge(%d,%d) 权重为: %d, 边类型为: %s \n", i, j, weight(i, j), etype);
+                        }
+                    }
+                }
+            }
+        }
+        printf("=======================================打印图信息结束==========================================\n");
+    }
 protected:
     size_t nodeNum, edgeNum;    //顶点总数, 边总数
     void reset() {
