@@ -54,6 +54,9 @@ public:
     virtual bool exists(size_t u, size_t v) const = 0;      //边(u,v)是否存在
     virtual void insert(size_t u, size_t v, int w) = 0;     //在顶点u和u之间插入权重为w的边e
 
+    /**图的转置**/
+    virtual Graph<Tv>* reverse() = 0;
+
     /**打印图的详细信息**/
     void print() {
         printf("=======================================打印当前图信息==========================================\n");

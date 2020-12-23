@@ -162,6 +162,27 @@ public:
         assert(p);
         return p->weight;
     }
+
+    /**图的转置**/
+    virtual Graph<Tv>* reverse() {
+        AdjGraph<Tv>* newGraph = new AdjGraph<Tv>();
+        newGraph->nodeNum = this->nodeNum;/* newGraph->edgeNum = this->edgeNum;*/
+        for (int i = 0; i < MAX_NODE_NUM; ++i) {
+            if (nodes[i])
+                newGraph->nodes[i] = new AdjNode<Tv>(vertex(i), nullptr);
+        }
+        for (int i = 0; i < MAX_NODE_NUM; ++i) {
+            if (nodes[i] && nodes[i]->firstEdge) {
+                auto p = nodes[i]->firstEdge;
+                while (p) {
+                    newGraph->insert(p->pos, i, p->weight);
+                    p = p->next;
+                }
+            }
+        }
+        return newGraph;
+    }
+
 private:
     // 返回边节点(u, v)
     EdgeNode* getEdge(size_t u, size_t v) const {
