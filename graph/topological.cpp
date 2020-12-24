@@ -10,7 +10,7 @@
 
 
 template<typename T>
-std::vector<size_t> GraphAlgorithm::topologicalSort(Graph<T> *graph) {
+std::vector<size_t> GraphAlgorithm::topological(Graph<T> *graph) {
     if (hasLoop(graph))
         throw std::logic_error("the current graph exists in a loop");
     std::vector<size_t> topological;

@@ -29,9 +29,9 @@ public:
 
     /**拓扑排序问题**/
     //基于dfs的拓扑排序算法
-    template<typename T> std::vector<size_t> topologicalSort(Graph<T> *graph);
+    template<typename T> std::vector<size_t> topological(Graph<T> *graph);
     //基于InDegree的拓扑排序算法
-    template<typename T> void topologicalSort1(Graph<T> *graph);
+    template<typename T> std::vector<size_t> topologicalByDegree(Graph<T> *graph);
 
     /**环路检测**/
     template<typename T> bool hasLoop(Graph<T> *graph);
