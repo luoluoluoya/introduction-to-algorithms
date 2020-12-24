@@ -51,7 +51,7 @@ public:
     //最短路径：BellmanFord算法
     template<typename T> std::map<size_t, size_t> bellmanFord(Graph<T> *graph, size_t s);
     //最短路径：有向无环图的单源最短路径问题
-    template<typename T> void dagShortestPath(Graph<T> *dag);
+    template<typename T> std::map<size_t, size_t> DAGShortestPath(Graph<T> *DAG, size_t s);
     //最短路径：Dijkstra算法
     template<typename T> void dijkstra(Graph<T> *graph);
     //最短路径：Floyd-Warshall算法
