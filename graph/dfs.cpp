@@ -6,7 +6,7 @@
  * 深度优先搜索算法
  */
 
-template <typename T> static void DFS(Graph<T> *&graph, size_t s, size_t &clock) {
+template<typename T> void GraphAlgorithm::DFS(Graph<T> *graph, size_t s, size_t &clock) {
     graph->dTime(s)  = clock++;
     graph->status(s) = discovered;
     //printf("当前访问节点 %d, 开始访问时间：%d\n", s, graph->dTime(s));
@@ -34,8 +34,8 @@ void GraphAlgorithm::dfs(Graph<T> *graph, size_t s) {
     graph->reset();
     size_t clock = 0; size_t v = s;
     do {
-        if (graph->status(s) == undiscovered) {
-            DFS<T>(graph, s, clock);
+        if (graph->status(v) == undiscovered) {
+            DFS<T>(graph, v, clock);
         }
     } while ( s != (v = ++v%graph->vSize()) );
 }

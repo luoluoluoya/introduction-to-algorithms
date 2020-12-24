@@ -62,6 +62,10 @@ public:
     template<typename T> void hungary(Graph<T> *graph);
     //二分图的最佳完美匹配：KM算法
     template<typename T> void KM(Graph<T> *graph);
+
+protected:
+    //深度优先搜索算法
+    template<typename T> void DFS(Graph<T> *graph, size_t s, size_t& clock);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H
