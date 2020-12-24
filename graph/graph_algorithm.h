@@ -5,6 +5,7 @@
 #ifndef ALGORITHM_GRAPH_ALGORITHM_H
 #define ALGORITHM_GRAPH_ALGORITHM_H
 
+#include <vector>
 #include "graph.h"
 
 /**
@@ -16,13 +17,13 @@ public:
     //广度优先搜索算法
     template<typename T> void bfs(Graph<T> *graph, size_t s);
     //深度优先搜索算法
-    template<typename T> void dfs(Graph<T> *graph, size_t s);
+    template<typename T> void dfs(Graph<T> *graph);
     //优先级搜索框架
     template<typename T, typename PU> void pfs(Graph<T> *graph, PU pu, size_t s);
 
     /**强联通分量**/
     //获取强联通分量
-    template<typename T> void bcc(Graph<T> *graph, size_t s);
+    template<typename T> std::vector<std::vector<size_t>> bcc(Graph<T> *graph);
 
     /**拓扑排序问题**/
     //基于dfs的拓扑排序算法
@@ -66,6 +67,8 @@ public:
 protected:
     //深度优先搜索算法
     template<typename T> void DFS(Graph<T> *graph, size_t s, size_t& clock);
+
+private:
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H

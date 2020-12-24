@@ -30,12 +30,12 @@ template<typename T> void GraphAlgorithm::DFS(Graph<T> *graph, size_t s, size_t 
 }
 
 template<typename T>
-void GraphAlgorithm::dfs(Graph<T> *graph, size_t s) {
+void GraphAlgorithm::dfs(Graph<T> *graph) {
     graph->reset();
-    size_t clock = 0; size_t v = s;
-    do {
+    size_t clock = 0;
+    for (int v = 0; v < MAX_NODE_NUM; ++v) {
         if (graph->status(v) == undiscovered) {
             DFS<T>(graph, v, clock);
         }
-    } while ( s != (v = ++v%graph->vSize()) );
+    }
 }
