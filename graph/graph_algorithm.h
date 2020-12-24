@@ -6,6 +6,8 @@
 #define ALGORITHM_GRAPH_ALGORITHM_H
 
 #include <vector>
+#include <cstddef>
+#include <exception>
 #include "graph.h"
 
 /**
@@ -27,9 +29,12 @@ public:
 
     /**拓扑排序问题**/
     //基于dfs的拓扑排序算法
-    template<typename T> void topologicalSort(Graph<T> *graph);
+    template<typename T> std::vector<size_t> topologicalSort(Graph<T> *graph);
     //基于InDegree的拓扑排序算法
     template<typename T> void topologicalSort1(Graph<T> *graph);
+
+    /**环路检测**/
+    template<typename T> bool hasLoop(Graph<T> *graph);
 
     /**最小支撑树问题**/
     //最小支撑树Prim算法
