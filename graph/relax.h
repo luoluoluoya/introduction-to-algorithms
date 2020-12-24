@@ -17,7 +17,7 @@ static inline void relax(Graph<T>* &graph, size_t u, size_t v) {
         graph->parent(v) = u;
         graph->priority(v) = graph->priority(u) + graph->weight(u, v);
     }
-    //printf("edge(%d,%d):%d; u.d:%d, v.d:%d, v.d.update:%d\n", u, v, graph->weight(u, v), graph->priority(u), p, graph->priority(v));
+    printf("edge(%d,%d):%d; u.d:%d, v.d:%d, v.d.update:%d\n", u, v, graph->weight(u, v), graph->priority(u), p, graph->priority(v));
 }
 
 #endif //ALGORITHM_RELAX_H
