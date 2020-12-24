@@ -9,7 +9,7 @@
 #include "relax.h"
 
 template<typename T>
-std::map<size_t, size_t> GraphAlgorithm::DAGShortestPath(Graph<T> *DAG, size_t s) {
+void GraphAlgorithm::DAGShortestPath(Graph<T> *DAG, size_t s) {
     // 获取顶点集的DFS访问fTime倒序
     dfs(DAG);
     std::vector<size_t> nodes;
@@ -26,12 +26,4 @@ std::map<size_t, size_t> GraphAlgorithm::DAGShortestPath(Graph<T> *DAG, size_t s
             relax(DAG, nodes[i], v);
         }
     }
-
-    // 统计最短路径
-    std::map<size_t, size_t> shortest;
-    for (int u = 0; u < MAX_NODE_NUM; ++u) {
-        if (DAG->exists(u))
-            shortest[u] = DAG->priority(u);
-    }
-    return shortest;
 }

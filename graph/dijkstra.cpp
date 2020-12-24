@@ -9,7 +9,7 @@
 #include "relax.h"
 
 template<typename T>
-std::map<size_t, size_t> GraphAlgorithm::dijkstra(Graph<T> *graph, size_t s) {
+void GraphAlgorithm::dijkstra(Graph<T> *graph, size_t s) {
     graph->reset();
     // 做n次贪心选择，确定所有节点的最短距离
     graph->priority(s) = 0;
@@ -29,12 +29,4 @@ std::map<size_t, size_t> GraphAlgorithm::dijkstra(Graph<T> *graph, size_t s) {
             }
         }
     }
-
-    // 统计最短路径
-    std::map<size_t, size_t> shortest;
-    for (int u = 0; u < MAX_NODE_NUM; ++u) {
-        if (graph->exists(u))
-            shortest[u] = graph->priority(u);
-    }
-    return shortest;
 }

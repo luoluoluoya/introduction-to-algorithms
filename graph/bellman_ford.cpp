@@ -10,7 +10,7 @@
 #include "relax.h"
 
 template<typename T>
-std::map<size_t, size_t> GraphAlgorithm::bellmanFord(Graph<T> *graph, size_t s) {
+void GraphAlgorithm::bellmanFord(Graph<T> *graph, size_t s) {
     graph->reset();
     // 获取所有边信息
     std::vector<Edge> edges;
@@ -33,12 +33,4 @@ std::map<size_t, size_t> GraphAlgorithm::bellmanFord(Graph<T> *graph, size_t s) 
         if (graph->priority(edge.first.second) < p)
             throw std::logic_error("The current graph has a negative loop");
     }
-
-    // 统计最短路径
-    std::map<size_t, size_t> shortest;
-    for (int u = 0; u < MAX_NODE_NUM; ++u) {
-        if (graph->exists(u))
-            shortest[u] = graph->priority(u);
-    }
-    return shortest;
 }
