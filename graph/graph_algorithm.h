@@ -10,6 +10,7 @@
 #include <exception>
 #include "graph.h"
 #include <utility>
+#include <list>
 
 /**
  * 图算法
@@ -43,7 +44,7 @@ public:
     //最小支撑树Prim算法
     template<typename T> std::vector<Edge> prim(Graph<T> *graph);
     //最小支撑树Kruskal算法
-    template<typename T> void kruskal(Graph<T> *graph);
+    template<typename T> std::vector<Edge> kruskal(Graph<T> *graph);
 
     /**最短路径问题**/
     //最短路径：BellmanFord算法
