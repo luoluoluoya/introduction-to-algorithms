@@ -61,8 +61,8 @@ public:
     template<typename T> void DAGShortestPath(Graph<T> *DAG, size_t s);
     //最短路径：Dijkstra算法(该算法要求图中不存在负权边)
     template<typename T> void dijkstra(Graph<T> *graph, size_t s);
-    //最短路径：矩阵乘法
-    template<typename T> void shortestBymatrix(Graph<T> *graph);
+    //最短路径：动态规划求解任意节点对的最短路径
+    template<typename T> int** shortestByDynamic(Graph<T> *graph);
     //最短路径：Floyd-Warshall算法
     template<typename T> void floydWarshall(Graph<T> *graph);
     //最短路径：用于稀疏图的johnson算法
