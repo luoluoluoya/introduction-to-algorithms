@@ -9,12 +9,15 @@
 #include <cstddef>
 #include <exception>
 #include "graph.h"
+#include <utility>
 
 /**
  * 图算法
  */
 class GraphAlgorithm {
 public:
+    typedef std::pair<std::pair<size_t, size_t>, int> Edge;
+
     /**图的遍历**/
     //广度优先搜索算法
     template<typename T> void bfs(Graph<T> *graph, size_t s);
@@ -38,7 +41,7 @@ public:
 
     /**最小支撑树问题**/
     //最小支撑树Prim算法
-    template<typename T> void prim(Graph<T> *graph);
+    template<typename T> std::vector<Edge> prim(Graph<T> *graph);
     //最小支撑树Kruskal算法
     template<typename T> void kruskal(Graph<T> *graph);
 
