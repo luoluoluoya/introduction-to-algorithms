@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstddef>
 #include <exception>
+#include <map>
 #include "graph.h"
 #include <utility>
 #include <list>
@@ -46,9 +47,9 @@ public:
     //最小支撑树Kruskal算法
     template<typename T> std::vector<Edge> kruskal(Graph<T> *graph);
 
-    /**最短路径问题**/
+    /**最短路径问题(所有最短路径的最短距离使用priority属性指代)**/
     //最短路径：BellmanFord算法
-    template<typename T> void bellmanFord(Graph<T> *graph);
+    template<typename T> std::map<size_t, size_t> bellmanFord(Graph<T> *graph, size_t s);
     //最短路径：有向无环图的单源最短路径问题
     template<typename T> void dagShortestPath(Graph<T> *dag);
     //最短路径：Dijkstra算法
