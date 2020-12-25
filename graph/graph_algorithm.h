@@ -48,24 +48,24 @@ public:
     template<typename T> std::vector<Edge> kruskal(Graph<T> *graph);
 
     /**最短路径问题(所有最短路径的最短距离使用priority属性指代)**/
-    //    // 统计最短路径
-    //    std::map<size_t, size_t> shortest;
-    //    for (int u = 0; u < MAX_NODE_NUM; ++u) {
-    //        if (graph->exists(u))
-    //            shortest[u] = graph->priority(u);
-    //    }
-    //    return shortest;
-    //最短路径：BellmanFord算法
+    //单目的地 v 的最短路径
+    //  求G的转置图并在其上执行单源最短路径
+    //指定节点对(u,v)的最短路径
+    //  求u的单源最短路径
+    //单源最短路径：BellmanFord算法
     template<typename T> void bellmanFord(Graph<T> *graph, size_t s);
-    //最短路径：有向无环图的单源最短路径问题
+    //单源最短路径：有向无环图的单源最短路径问题
     template<typename T> void DAGShortestPath(Graph<T> *DAG, size_t s);
-    //最短路径：Dijkstra算法(该算法要求图中不存在负权边)
+    //单源最短路径：Dijkstra算法(该算法要求图中不存在负权边)
     template<typename T> void dijkstra(Graph<T> *graph, size_t s);
-    //最短路径：动态规划求解任意节点对的最短路径; (利用矩阵重平方技术对其进行优化)
+    //单源最短路径：Dijkstra算法(该算法要求图中不存在负权边)
+    //任意节点对最短路径：动态规划求解任意节点对的最短路径; (利用矩阵重平方技术对其进行优化)
     template<typename T> int** shortestByDynamic(Graph<T> *graph);
-    //最短路径：Floyd-Warshall算法
+    //任意节点对最短路径：利用重平方技术优化矩阵乘法
+    template<typename T> int** shortestByGoodMatrix(Graph<T> *graph);
+    //任意节点对最短路径：Floyd-Warshall算法
     template<typename T> void floydWarshall(Graph<T> *graph);
-    //最短路径：用于稀疏图的johnson算法
+    //任意节点对最短路径：用于稀疏图的johnson算法
     template<typename T> void johnson(Graph<T> *graph);
 
     /**最大流问题**/
@@ -82,12 +82,9 @@ public:
     template<typename T> void hungary(Graph<T> *graph);
     //二分图的最佳完美匹配：KM算法
     template<typename T> void KM(Graph<T> *graph);
-
 protected:
     //深度优先搜索算法
     template<typename T> void DFS(Graph<T> *graph, size_t s, size_t& clock);
-
-private:
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H
