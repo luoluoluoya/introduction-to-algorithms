@@ -38,6 +38,21 @@ Graph<T>* introduceSource(Graph<T> *graph) {
     return newGraph;
 }
 
+// 获取最短路径
+void johnsonShortest(int** path, size_t i, size_t j, std::vector<size_t>&nodes) {
+    int k = path[i][j];
+    if (k == -1)
+        return;
+    johnsonShortest(path, i, k, nodes);
+    nodes.push_back(k);
+}
+std::vector<size_t> johnsonShortest(int** path, size_t i, size_t j) {
+    std::vector<size_t> nodes;
+    johnsonShortest(path, i, j, nodes);
+    nodes.push_back(j);
+    return nodes;
+}
+
 // 返回任意节点的最短路径
 template<typename T>
 std::pair<int **, int **> GraphAlgorithm::johnson(Graph<T> *graph) {
