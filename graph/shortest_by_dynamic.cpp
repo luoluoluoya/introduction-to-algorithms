@@ -10,16 +10,17 @@
 
 // 在(i,j)中新增边以尝试扩展最短路径
 template<typename T>
-static inline int** extendShortestPath(Graph<T>*& graph, int **L, int **W) {
+static inline int **extendShortestPath(Graph<T> *&graph, int **L, int **W, int **&path) {
     static int a = 1;
-    int** L1 = initEmptyMatrix(graph);
+    int **L1 = initEmptyMatrix(graph);
     for (int i = 0; i < graph->vSize(); ++i) {
         for (int j = 0; j < graph->vSize(); ++j) {
             for (int k = 0; k < graph->vSize(); ++k) {
                 // i到k可达且e(k,j)存在时尝试对其进行优化
                 if (L[i][k] < INT_MAX && W[k][j] < INT_MAX) {
-                    if (L1[i][j] > L[i][k]+W[k][j]) {
-                        L1[i][j] = L[i][k]+W[k][j];
+                    if (L1[i][j] > L[i][k] + W[k][j]) {
+                        path[i][j] = k;
+                        L1[i][j] = L[i][k] + W[k][j];
                     }
                 }
             }
@@ -30,17 +31,18 @@ static inline int** extendShortestPath(Graph<T>*& graph, int **L, int **W) {
 
 // 动态规划求解任意节点对的最短路径
 template<typename T>
-int** GraphAlgorithm::shortestByDynamic(Graph<T> *graph) {
-    int** W = initWeightMatrix(graph);
-    int** shortest = initWeightMatrix(graph);
+std::pair<int **, int **> GraphAlgorithm::shortestByDynamic(Graph<T> *graph) {
+    int **W = initWeightMatrix(graph);
+    int **shortest = initWeightMatrix(graph);
+    int **path = initEmptyMatrix(graph);
     // 在任意节点对(i,j)中引入m条边
-    for (int m = 2; m < graph->vSize()-1; ++m) {
-        int** LSucc = extendShortestPath(graph, shortest, W);
+    for (int m = 2; m < graph->vSize() - 1; ++m) {
+        int **LSucc = extendShortestPath(graph, shortest, W, path);
         destructGraphMatrix(graph, shortest);
         shortest = LSucc;
     }
     // 检测是否存在环路
-    int** LSucc = extendShortestPath(graph, shortest, W);
+    int **LSucc = extendShortestPath(graph, shortest, W, path);
     for (int i = 0; i < graph->vSize(); ++i) {
         for (int j = 0; j < graph->vSize(); ++j) {
             if (LSucc[i][j] < shortest[i][j])
@@ -49,5 +51,5 @@ int** GraphAlgorithm::shortestByDynamic(Graph<T> *graph) {
     }
     destructGraphMatrix(graph, W);
     destructGraphMatrix(graph, LSucc);
-    return shortest;
+    return std::make_pair(shortest, path);
 }

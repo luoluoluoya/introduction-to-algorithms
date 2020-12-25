@@ -60,7 +60,7 @@ public:
     template<typename T> void dijkstra(Graph<T> *graph, size_t s);
     //单源最短路径：Dijkstra算法(该算法要求图中不存在负权边)
     //任意节点对最短路径：动态规划求解任意节点对的最短路径; (利用矩阵重平方技术对其进行优化)
-    template<typename T> int** shortestByDynamic(Graph<T> *graph);
+    template<typename T> std::pair<int**, int**> shortestByDynamic(Graph<T> *graph);
     //任意节点对最短路径：利用重平方技术优化矩阵乘法
     template<typename T> int** shortestByGoodMatrix(Graph<T> *graph);
     //任意节点对最短路径：Floyd-Warshall算法

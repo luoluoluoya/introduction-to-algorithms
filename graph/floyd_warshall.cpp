@@ -11,20 +11,20 @@
 
 #include "init_graph_matrix.h"
 
-static inline void printShortestPath(int**& path, size_t i, size_t j, std::vector<size_t>& nodes) {
+static inline void warshallShortestPath(int**& path, size_t i, size_t j, std::vector<size_t>& nodes) {
     size_t k = path[i][j];
     if (k == INT_MAX)
         return;
-    printShortestPath(path, i, k, nodes);
+    warshallShortestPath(path, i, k, nodes);
     nodes.push_back(k);
-    printShortestPath(path, k, j, nodes);
+    warshallShortestPath(path, k, j, nodes);
 }
 
 // 返回任意节点的最短路径
-static inline std::vector<size_t> printShortestPath(int**& path, size_t i, size_t j) {
+static inline std::vector<size_t> warshallShortestPath(int**& path, size_t i, size_t j) {
     std::vector<size_t> nodes;
     nodes.push_back(i);
-    printShortestPath(path, i, j, nodes);
+    warshallShortestPath(path, i, j, nodes);
     nodes.push_back(j);
     return nodes;
 }
