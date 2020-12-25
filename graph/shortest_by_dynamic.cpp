@@ -8,6 +8,22 @@
 
 #include "init_graph_matrix.h"
 
+static inline void dynamicShortestPath(int**& path, size_t i, size_t j, std::vector<size_t>& nodes) {
+    size_t k = path[i][j];
+    if (i != j && k != INT_MAX)
+        dynamicShortestPath(path, i, k, nodes);
+    nodes.push_back(k);
+}
+
+// 返回任意节点的最短路径
+static inline std::vector<size_t> dynamicShortestPath(int**& path, size_t i, size_t j) {
+    std::vector<size_t> nodes;
+    dynamicShortestPath(path, i, j, nodes);
+    nodes.push_back(j);
+    return nodes;
+}
+
+
 // 在(i,j)中新增边以尝试扩展最短路径
 template<typename T>
 static inline int **extendShortestPath(Graph<T> *&graph, int **L, int **W, int **&path) {
