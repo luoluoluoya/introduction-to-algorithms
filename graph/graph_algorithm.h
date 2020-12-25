@@ -105,7 +105,7 @@ public:
 
     //最大流：Ford-Fulkerson算法
     template<typename T>
-    void fordFulkerson(Graph<T> *graph, size_t s, size_t t);
+    int** fordFulkerson(Graph<T> *graph, size_t s, size_t t);
 
     //最大流：前置重贴标签算法
     template<typename T>
