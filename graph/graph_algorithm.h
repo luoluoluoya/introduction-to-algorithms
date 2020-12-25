@@ -96,7 +96,7 @@ public:
 
     /**有向图的传递闭包**/
     template<typename T>
-    bool ** transitiveClosure(Graph<T> *graph);
+    bool **transitiveClosure(Graph<T> *graph);
 
     /**最大流问题**/
     //最大流：Edmonds-Karp算法
