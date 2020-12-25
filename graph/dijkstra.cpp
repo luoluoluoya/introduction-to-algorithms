@@ -22,7 +22,7 @@ void GraphAlgorithm::dijkstra(Graph<T> *graph, size_t s) {
             }
         }
         // 贪心选择：获取当前问题最段距离
-        for (int u = 0, min = INT_MAX; u < MAX_NODE_NUM; ++u) {
+        for (int u = 0, min = INT_MAX; u < graph->vSize(); ++u) {
             if (graph->exists(u) && graph->status(u) == undiscovered && graph->priority(u) < min) {
                 min = graph->priority(u);
                 s = u;

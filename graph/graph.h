@@ -8,8 +8,8 @@
 //#define MAX_NODE_NUM 50
 //#define MAX_EDGE_NUM 50*49
 
-#define MAX_NODE_NUM 6
-#define MAX_EDGE_NUM 6*5
+#define MAX_NODE_NUM 10
+#define MAX_EDGE_NUM 10*9
 
 #include <climits>
 #include <iostream>
@@ -60,11 +60,11 @@ public:
     /**打印图的详细信息**/
     void print() {
         printf("=======================================Print Graph Info==========================================\n");
-        for (int i = 0; i < MAX_NODE_NUM; ++i) {
+        for (int i = 0; i < nodeNum; ++i) {
             if (exists(i)) {
                 printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d \n", i, inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
                 if (outDegree(i)) {
-                    for (int j = 0; j < MAX_NODE_NUM; ++j) {
+                    for (int j = 0; j < nodeNum; ++j) {
                         if (exists(i, j)) {
                             const char *etype = type(i, j) == undetermined ? "undetermined" : ( type(i, j) == tree ? "tree" : ( type(i, j) == froward ? "froward" : ( type(i, j) == backword ? "backword" : "cross" ) ) );
                             printf("\t Edge(%d,%d) weight: %d, type: %s \n", i, j, weight(i, j), etype);
@@ -78,14 +78,14 @@ public:
 protected:
     size_t nodeNum, edgeNum;    //顶点总数, 边总数
     void reset() {
-        for (int i = 0; i < MAX_NODE_NUM; i++) {
+        for (int i = 0; i < nodeNum; i++) {
             // 顶点
             status(i) = undiscovered;
             dTime(i) = fTime(i) = 0;
             parent(i) = -1;
             priority(i) = INT_MAX;
             // 边
-            for (int j = 0; j < MAX_NODE_NUM; ++j) {
+            for (int j = 0; j < nodeNum; ++j) {
                 if (exists(i, j)) type(i, j) = undetermined;
             }
         }

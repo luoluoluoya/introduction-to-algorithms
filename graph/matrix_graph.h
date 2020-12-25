@@ -39,19 +39,14 @@ public:
     //插入顶点，返回编号
     size_t insert(Tv const & e) {
         assert(this->nodeNum < MAX_NODE_NUM);
-        this->nodeNum++;
-        for (int i = 0; i < MAX_NODE_NUM; ++i) {
-            if (!nodes[i]) {
-                nodes[i] = new GraphNode<Tv>(e);
-                return i;
-            }
-        }
+        nodes[this->nodeNum] = new GraphNode<Tv>(e);
+        return this->nodeNum++;
     }
     //删除顶点及其关联边，返回该顶点信息
     Tv remove(size_t u) {
-        assert(nodes[u]);
+        assert(u < this->nodeNum && nodes[u]);
         size_t delEdges = 0;
-        for (int i = 0; i < MAX_NODE_NUM; ++i) {
+        for (int i = 0; i < this->nodeNum; ++i) {
             if (edges[u][i]) {
                 ++delEdges;
                 delete edges[u][i];
@@ -75,7 +70,7 @@ public:
     size_t outDegree(size_t u) const { assert(nodes[u]); return nodes[u]->outDegree; }
     //顶点u的首个邻接顶点
     int firstNbr(size_t u) const {
-        return nextNbr(u, MAX_NODE_NUM);
+        return nextNbr(u, this->nodeNum);
     }
     //顶点u的（相对于顶点v的）下一邻接顶点
     int nextNbr(size_t u, size_t v) const {
@@ -117,13 +112,13 @@ public:
     virtual Graph<Tv>* reverse() {
         MatrixGraph<Tv>* newGraph = new MatrixGraph<Tv>();
         newGraph->nodeNum = this->nodeNum;
-        for (int u = 0; u < MAX_NODE_NUM; ++u)
-            if (exists(u))
-                newGraph->nodes[u] = new GraphNode<Tv>(vertex(u));
-        for (int u = 0; u < MAX_NODE_NUM; ++u)
-            for (int v = 0; v < MAX_NODE_NUM; ++v)
-                if (exists(u, v))
-                    newGraph->insert(v, u, weight(u, v));
+        for (int u = 0; u < this->nodeNum; ++u)
+            newGraph->nodes[u] = new GraphNode<Tv>(vertex(u));
+        for (int u = 0; u < this->nodeNum; ++u) {
+            for (int v = firstNbr(u); -1 < v; v = nextNbr(u, v)) {
+                newGraph->insert(u, v, weight(u, v));
+            }
+        }
         return newGraph;
     }
 private:
