@@ -44,6 +44,7 @@ public:
     }
     //删除顶点及其关联边，返回该顶点信息
     Tv remove(size_t u) {
+        throw std::logic_error("维持节点在 0 ~ nodeNums 内的有效性，暂时注释");
         assert(u < this->nodeNum && nodes[u]);
         size_t delEdges = 0;
         for (int i = 0; i < this->nodeNum; ++i) {

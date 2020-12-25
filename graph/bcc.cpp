@@ -28,7 +28,7 @@ std::vector<std::vector<size_t>> GraphAlgorithm::bcc(Graph<T> *graph) {
     // 获取定点集的DFS访问fTime倒序
     dfs(graph);
     size_t nodes[graph->vSize()];
-    for (int i = 0, k = 0; i < MAX_NODE_NUM; ++i) {
+    for (int i = 0, k = 0; i < graph->vSize(); ++i) {
         if (graph->exists(i))
             nodes[k++] = i;
     }

@@ -9,8 +9,8 @@
 template<typename T>
 bool GraphAlgorithm::hasLoop(Graph<T> *graph) {
     dfs(graph);
-    for (int i = 0; i < MAX_NODE_NUM; ++i) {
-        for (int j = 0; j < MAX_NODE_NUM; ++j) {
+    for (int i = 0; i < graph->vSize(); ++i) {
+        for (int j = 0; j < graph->vSize(); ++j) {
             if (graph->exists(i, j) && graph->type(i, j) == backword)
                 return true;
         }

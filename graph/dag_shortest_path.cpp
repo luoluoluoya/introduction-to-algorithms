@@ -13,7 +13,7 @@ void GraphAlgorithm::DAGShortestPath(Graph<T> *DAG, size_t s) {
     // 获取顶点集的DFS访问fTime倒序
     dfs(DAG);
     std::vector<size_t> nodes;
-    for (int i = 0; i < MAX_NODE_NUM; ++i) {
+    for (int i = 0; i < DAG->vSize(); ++i) {
         if (DAG->exists(i))
             nodes.push_back(i);
     }

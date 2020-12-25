@@ -33,7 +33,7 @@ template<typename T>
 void GraphAlgorithm::dfs(Graph<T> *graph) {
     graph->reset();
     size_t clock = 0;
-    for (int v = 0; v < MAX_NODE_NUM; ++v) {
+    for (int v = 0; v < graph->vSize(); ++v) {
         if (graph->status(v) == undiscovered) {
             DFS<T>(graph, v, clock);
         }
