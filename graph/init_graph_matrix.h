@@ -13,9 +13,9 @@
 
 // 当前图的空矩阵,任意节点设置为不可达：W[i][j] = INT_MAX
 template<typename T>
-static inline int** initEmptyMatrix(Graph<T>* &graph) {
-    int** W = nullptr;
-    W = new int*[graph->vSize()];
+static inline int **initEmptyMatrix(Graph<T> *&graph) {
+    int **W = nullptr;
+    W = new int *[graph->vSize()];
     for (int i = 0; i < graph->vSize(); ++i) {
         W[i] = new int[graph->vSize()];
         for (int j = 0; j < graph->vSize(); ++j) {
@@ -30,9 +30,9 @@ static inline int** initEmptyMatrix(Graph<T>* &graph) {
 //          = INT_MAX; (!graph->exists(i, j))
 //          = 0; (i == j)
 template<typename T>
-static inline int** initWeightMatrix(Graph<T>* &graph) {
-    int** W = nullptr;
-    W = new int*[graph->vSize()];
+static inline int **initWeightMatrix(Graph<T> *&graph) {
+    int **W = nullptr;
+    W = new int *[graph->vSize()];
     for (int i = 0; i < graph->vSize(); ++i) {
         W[i] = new int[graph->vSize()];
         for (int j = 0; j < graph->vSize(); ++j) {
@@ -42,9 +42,25 @@ static inline int** initWeightMatrix(Graph<T>* &graph) {
     return W;
 }
 
+// 获取图的布尔矩阵
+// matrix[i][j] = true; (i=j || graph->exists(i, j))
+//              = false; (其他)
+template<typename T>
+static inline bool **initBoolMatrix(Graph<T> *&graph) {
+    bool **matrix = nullptr;
+    matrix = new bool *[graph->vSize()];
+    for (int i = 0; i < graph->vSize(); ++i) {
+        matrix[i] = new bool[graph->vSize()];
+        for (int j = 0; j < graph->vSize(); ++j) {
+            matrix[i][j] = i == j ? true : (graph->exists(i, j) ? true : false);;
+        }
+    }
+    return matrix;
+}
+
 // 销毁由图graph所创建的矩阵
 template<typename T>
-static inline void destructGraphMatrix(Graph<T>* &graph, int** M) {
+static inline void destructGraphMatrix(Graph<T> *&graph, int **M) {
     for (int i = 0; i < graph->vSize(); ++i) {
         delete[] M[i];
     }
