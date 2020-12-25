@@ -34,7 +34,7 @@ void increasingFlow(Graph<T> *graph, Graph<T> *rng, size_t s, size_t t, int **fl
     }
 }
 
-// 获取最大流
+// Edmonds-Karp算法
 template<typename T>
 int ** GraphAlgorithm::edmondsKarp(Graph<T> *graph, size_t s, size_t t) {
     int **flow = initFlowMatrix(graph);
