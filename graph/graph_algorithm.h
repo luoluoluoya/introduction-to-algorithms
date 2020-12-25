@@ -130,7 +130,7 @@ protected:
 
     //残存网络
     template<typename T>
-    Graph<T>* remnantNetworks(Graph<T> *graph);
+    Graph<T>* remnantNetworks(Graph<T> *graph, int**flows);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H
