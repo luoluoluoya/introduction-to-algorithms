@@ -14,8 +14,7 @@ void GraphAlgorithm::bellmanFord(Graph<T> *graph, size_t s) {
     graph->reset();
     // 获取所有边信息
     std::vector<Edge> edges;
-    for (int u = 0; u < MAX_NODE_NUM; ++u) {
-        if (!graph->exists(u)) continue;
+    for (int u = 0; u < graph->vSize(); ++u) {
         for (int v = graph->firstNbr(u); -1 < v ; v = graph->nextNbr(u, v)) {
             edges.push_back({{u, v}, graph->weight(u, v)});
         }

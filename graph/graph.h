@@ -8,8 +8,8 @@
 //#define MAX_NODE_NUM 50
 //#define MAX_EDGE_NUM 50*49
 
-#define MAX_NODE_NUM 5
-#define MAX_EDGE_NUM 5*4
+#define MAX_NODE_NUM 6
+#define MAX_EDGE_NUM 6*5
 
 #include <climits>
 #include <iostream>
