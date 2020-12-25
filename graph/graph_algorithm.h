@@ -101,7 +101,7 @@ public:
     /**最大流问题**/
     //最大流：Edmonds-Karp算法
     template<typename T>
-    std::vector<Edge> edmondsKarp(Graph<T> *graph, size_t s, size_t t);
+    int ** edmondsKarp(Graph<T> *graph, size_t s, size_t t);
 
     //最大流：Ford-Fulkerson算法
     template<typename T>
@@ -130,7 +130,7 @@ protected:
 
     //残存网络
     template<typename T>
-    Graph<T>* remnantNetworks(Graph<T> *graph, int**flows);
+    Graph<T> *remnantNetworks(Graph<T> *graph, int **flow);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H

@@ -14,7 +14,7 @@ template <typename T> static void BFS(Graph<T> *&graph, size_t s, size_t &clock)
     while (!Q.empty()) {
         size_t u = Q.front(); Q.pop();
         //printf("Visited Node %d\n", u);
-        for (int v = graph->firstNbr(u); v > -1; v = graph->nextNbr(u, v)) {
+        for (int v = graph->firstNbr(u); -1 < v; v = graph->nextNbr(u, v)) {
             if (graph->status(v) == undiscovered) {
                 graph->type(u, v) = tree;
                 graph->parent(v)  = u;

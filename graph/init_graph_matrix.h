@@ -52,7 +52,21 @@ static inline bool **initBoolMatrix(Graph<T> *&graph) {
     for (int i = 0; i < graph->vSize(); ++i) {
         matrix[i] = new bool[graph->vSize()];
         for (int j = 0; j < graph->vSize(); ++j) {
-            matrix[i][j] = i == j ? true : (graph->exists(i, j) ? true : false);;
+            matrix[i][j] = i == j ? true : (graph->exists(i, j) ? true : false);
+        }
+    }
+    return matrix;
+}
+
+// 获取图的流信息：matrix[i][j] = 0;
+template<typename T>
+static inline int **initFlowMatrix(Graph<T> *&graph) {
+    int **matrix = nullptr;
+    matrix = new int *[graph->vSize()];
+    for (int i = 0; i < graph->vSize(); ++i) {
+        matrix[i] = new int[graph->vSize()];
+        for (int j = 0; j < graph->vSize(); ++j) {
+            matrix[i][j] = 0;
         }
     }
     return matrix;
