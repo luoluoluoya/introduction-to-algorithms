@@ -101,19 +101,20 @@ public:
     /**最大流问题**/
     //最大流：Edmonds-Karp算法
     template<typename T>
-    int ** edmondsKarp(Graph<T> *graph, size_t s, size_t t);
+    int **edmondsKarp(Graph<T> *graph, size_t s, size_t t);
 
     //最大流：Ford-Fulkerson算法
     template<typename T>
-    int** fordFulkerson(Graph<T> *graph, size_t s, size_t t);
-
-    //最大流：前置重贴标签算法
-    template<typename T>
-    void relabelToFront(Graph<T> *graph, size_t s, size_t t);
+    int **fordFulkerson(Graph<T> *graph, size_t s, size_t t);
 
     //最大流：推送重贴标签算法
     template<typename T>
-    void pushRelabel(Graph<T> *graph, size_t s, size_t t);
+    std::vector<Edge> pushRelabel(Graph<T> *graph, size_t s, size_t t);
+
+    //最大流：前置重贴标签算法
+    template<typename T>
+    std::vector<Edge> relabelToFront(Graph<T> *graph, size_t s, size_t t);
+
     /**二分图匹配**/
     //二分图的最大匹配：匈牙利算法
     template<typename T>
@@ -131,6 +132,14 @@ protected:
     //残存网络
     template<typename T>
     Graph<T> *remnantNetworks(Graph<T> *graph, int **flow);
+
+    //重贴标签
+    template<typename T>
+    void relabel(Graph<T> *graph, std::vector<size_t> &height);
+
+    //推送
+    template<typename T>
+    void push(Graph<T> *graph, size_t u, size_t v, std::vector<size_t> &excess, const std::vector<size_t> &height);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H
