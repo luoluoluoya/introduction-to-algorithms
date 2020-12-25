@@ -64,9 +64,12 @@ public:
     //任意节点对最短路径：利用重平方技术优化矩阵乘法
     template<typename T> int** shortestByGoodMatrix(Graph<T> *graph);
     //任意节点对最短路径：Floyd-Warshall算法
-    template<typename T> void floydWarshall(Graph<T> *graph);
+    template<typename T> std::pair<int**, int**> floydWarshall(Graph<T> *graph);
     //任意节点对最短路径：用于稀疏图的johnson算法
-    template<typename T> void johnson(Graph<T> *graph);
+    template<typename T> int** johnson(Graph<T> *graph);
+
+    /**有向图的传递闭包**/
+
 
     /**最大流问题**/
     //最大流：Edmonds-Karp算法

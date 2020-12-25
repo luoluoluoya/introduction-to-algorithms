@@ -6,7 +6,7 @@
  * 最短路径：动态规划求解任意节点对的最短路径
  */
 
-#include "init_shortest_matrix.h"
+#include "init_graph_matrix.h"
 
 // 在(i,j)中新增边以尝试扩展最短路径
 template<typename T>

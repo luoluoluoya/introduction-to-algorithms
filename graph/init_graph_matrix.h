@@ -2,12 +2,14 @@
 // Created by 张锐 on 2020/12/24.
 //
 
-#ifndef ALGORITHM_INIT_SHORTEST_MATRIX_H
-#define ALGORITHM_INIT_SHORTEST_MATRIX_H
+#ifndef ALGORITHM_INIT_GRAPH_MATRIX_H
+#define ALGORITHM_INIT_GRAPH_MATRIX_H
 
 /*
  * 初始化最短路径矩阵
  */
+
+#include <climits>
 
 // 当前图的空矩阵,任意节点设置为不可达：W[i][j] = INT_MAX
 template<typename T>
@@ -49,4 +51,4 @@ static inline void destructGraphMatrix(Graph<T>* &graph, int** M) {
     delete M;
 }
 
-#endif //ALGORITHM_INIT_SHORTEST_MATRIX_H
+#endif //ALGORITHM_INIT_GRAPH_MATRIX_H
