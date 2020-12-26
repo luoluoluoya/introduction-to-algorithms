@@ -50,7 +50,7 @@ public:
     virtual int &parent(size_t) = 0;                //顶点u在遍历树中的父亲
     virtual int &priority(size_t) = 0;              //顶点u在遍历树中的优先级数
     virtual size_t &height(size_t) = 0;             //顶点u在最大流中的高度
-    virtual size_t &excess(size_t) = 0;             //顶点u在最大流中的超额流
+    virtual int &excess(size_t) = 0;                //顶点u在最大流中的超额流
     /**边：无向边均统一转化为方向互逆的一对有向边**/
     virtual void remove(size_t, size_t) = 0;        //删除顶点u和u之间的边e，返回该边信息
     virtual EdgeType &type(size_t u, size_t v) = 0; //边(u,v)的类型

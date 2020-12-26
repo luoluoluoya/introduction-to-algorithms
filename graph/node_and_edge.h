@@ -29,8 +29,8 @@ public:
     size_t outDegree;
     int parent;
     int priority;
-    size_t h;  // 最大流中节点的高度
-    size_t e;  // 最大流中节点的超额流
+    size_t h;   // 最大流中节点的高度
+    int e;      // 最大流中节点的超额流
 };
 
 struct GraphEdge {

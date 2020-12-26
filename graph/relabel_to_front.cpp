@@ -13,22 +13,25 @@
 // 节点链表
 typedef struct FlowNode {
     size_t index;
-    struct FlowNode* next;
-    FlowNode(size_t i, FlowNode* n = nullptr): index(i), next(n) {}
-} *FlowNodePointer;
+    struct FlowNode *succ;
+    struct FlowNode *pre;
 
+    FlowNode(size_t i, FlowNode *p = nullptr, FlowNode *s = nullptr) : index(i), pre(p), succ(s) {}
+} *FlowNodePointer;
 
 // 释放节点
 template<typename T>
 void GraphAlgorithm::discharge(Graph<T> *graph, Graph<T> *rng, size_t u) {
-    size_t v = rng->firstNbr(u);
+    int v = rng->firstNbr(u);
     while (graph->excess(u) > 0) {
         if (v < 0) {
             relabel(graph, rng, u);
             v = rng->firstNbr(u);
-        } else if (graph->height(u) != graph->height(v) + 1) {
+        } else if (graph->height(u) == graph->height(v) + 1) {
             push(graph, rng, u, v);
-            delete rng; rng = remnantNetworks(graph);
+            delete rng;
+            rng = remnantNetworks(graph);
+            v = rng->nextNbr(u, v);
         } else {
             v = rng->nextNbr(u, v);
         }
@@ -37,21 +40,31 @@ void GraphAlgorithm::discharge(Graph<T> *graph, Graph<T> *rng, size_t u) {
 
 template<typename T>
 std::vector<typename GraphAlgorithm::Edge> GraphAlgorithm::relabelToFront(Graph<T> *graph, size_t s, size_t t) {
-    GraphNode<T>* rng = remnantNetworks(graph);
-    FlowNodePointer head = new FlowNode(0, nullptr), p = head;
-    for (int i = 1; i < graph->vSize(); ++i) {
+    initPushRelabel(graph, s);
+    Graph<T> *rng = remnantNetworks(graph);
+    FlowNodePointer head = nullptr, p = head, q = head;
+    for (int i = 0; i < graph->vSize(); ++i) {
         if (i == s || i == t) continue;
-        p->next = new FlowNode(i);
+        if (!head)
+            p = head = new FlowNode(i, nullptr, nullptr);
+        else
+            p = (p->succ = new FlowNode(i, p, p->succ));
     }
     p = head;
     while (p) {
         // 释放节点u
         size_t oldHeight = graph->height(p->index);
+        discharge(graph, rng, p->index);
         // 重贴标签需要将其移动到列表的开头
         if (graph->height(p->index) > oldHeight) {
-            p->next = head->next;
+            if (p != head) {
+                p->pre->succ = p->succ;
+                p->succ->pre = p->pre;
+                p->pre = nullptr;
+                p->succ = head->succ;
+            }
         }
-        p = p->next;
+        p = p->succ;
     }
     return statisticalFlow(graph);
 }

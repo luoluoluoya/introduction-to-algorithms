@@ -142,7 +142,7 @@ public:
     }
 
     //顶点u在最大流中的超额流
-    size_t &excess(size_t u) {
+    int &excess(size_t u) {
         assert(nodes[u]);
         return nodes[u]->e;
     }
