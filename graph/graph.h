@@ -67,8 +67,8 @@ public:
         printf("=======================================Print Graph Info==========================================\n");
         for (int i = 0; i < nodeNum; ++i) {
             if (exists(i)) {
-                printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d \n", i,
-                       inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
+                printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d, height:%d, excess:%d \n", i,
+                       inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i), height(i), excess(i));
                 if (outDegree(i)) {
                     for (int j = 0; j < nodeNum; ++j) {
                         if (exists(i, j)) {
@@ -76,7 +76,7 @@ public:
                                     type(i, j) == undetermined ? "undetermined" : (type(i, j) == tree ? "tree" : (
                                             type(i, j) == froward ? "froward" : (type(i, j) == backword ? "backword"
                                                                                                         : "cross")));
-                            printf("\t Edge(%d,%d) weight: %d, type: %s \n", i, j, weight(i, j), etype);
+                            printf("\t Edge(%d,%d) weight: %d, type: %s, flow: %d\n", i, j, weight(i, j), etype, flow(i, j));
                         }
                     }
                 }

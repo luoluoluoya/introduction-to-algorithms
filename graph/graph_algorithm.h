@@ -137,11 +137,11 @@ protected:
 
     //重贴标签
     template<typename T>
-    void relabel(Graph<T> *graph, std::vector<size_t> &height);
+    bool relabel(Graph<T> *graph, Graph<T> *rng, size_t u);
 
     //推送
     template<typename T>
-    void push(Graph<T> *graph, size_t u, size_t v, std::vector<size_t> &excess, const std::vector<size_t> &height);
+    bool push(Graph<T> *graph, Graph<T> *rng, size_t u, size_t v);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H

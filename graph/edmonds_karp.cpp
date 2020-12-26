@@ -34,22 +34,11 @@ void increasingFlow(Graph<T> *graph, Graph<T> *rng, size_t s, size_t t) {
     }
 }
 
-// 统计边上的流信息
-template<typename T>
-std::vector<typename GraphAlgorithm::Edge> statisticalFlow(Graph<T> *graph) {
-    std::vector<typename GraphAlgorithm::Edge> flow;
-    for (int u = 0; u < graph->vSize(); ++u) {
-        for (int v = graph->firstNbr(u); -1 < v; v = graph->nextNbr(u, v)) {
-            flow.push_back( {{u, v}, graph->flow(u, v)} );
-        }
-    }
-    return flow;
-}
 
 // Edmonds-Karp算法
 template<typename T>
 std::vector<typename GraphAlgorithm::Edge> GraphAlgorithm::edmondsKarp(Graph<T> *graph, size_t s, size_t t) {
-    initGraphFlow(graph, s);
+    initGraphFlow(graph);
     Graph<T> *rng = remnantNetworks(graph);
     bfs(rng, s);
     while (rng->parent(t) != -1) {
