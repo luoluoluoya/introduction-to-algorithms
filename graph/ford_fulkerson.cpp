@@ -8,6 +8,6 @@
  */
 
 template<typename T>
-int **GraphAlgorithm::fordFulkerson(Graph<T> *graph, size_t s, size_t t) {
+std::vector<typename GraphAlgorithm::Edge> GraphAlgorithm::fordFulkerson(Graph<T> *graph, size_t s, size_t t) {
     return edmondsKarp(graph, s, t);
 }
