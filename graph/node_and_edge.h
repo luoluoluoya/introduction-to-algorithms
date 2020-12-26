@@ -23,13 +23,16 @@ public:
     size_t outDegree;
     int parent;
     int priority;
+    int h;  // 最大流中节点的高度
+    int e;  // 最大流中节点的超额流
 };
 
 struct GraphEdge {
 public:
     GraphEdge(int w = 0):type(undetermined),weight(w) {}
-    int weight;
-    EdgeType type;
+    int weight;     // 边的权重
+    EdgeType type;  // 边的类型
+    int flow;       // 边上的流
 };
 
 #endif //ALGORITHM_NODE_AND_EDGE_H
