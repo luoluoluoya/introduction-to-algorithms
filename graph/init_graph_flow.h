@@ -7,9 +7,12 @@
 
 // 设置图上的流信息
 template<typename T>
-static inline void initGraphFlow(Graph<T> *&graph) {
+static inline void initGraphFlow(Graph<T> *&graph, size_t s) {
     for (int u = 0; u < graph->vSize(); ++u) {
+        graph->height(u) = ( u == s ? graph->vSize() : 0 );
+        graph->excess(u) = 0;
         for (int v = graph->firstNbr(u); -1 < v; v = graph->nextNbr(u, v)) {
+            graph->flow(u, v) = 0;
         }
     }
 }
