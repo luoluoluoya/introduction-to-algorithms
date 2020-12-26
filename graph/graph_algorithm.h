@@ -142,6 +142,10 @@ protected:
     //推送
     template<typename T>
     bool push(Graph<T> *graph, Graph<T> *rng, size_t u, size_t v);
+
+    //释放节点
+    template<typename T>
+    void discharge(Graph<T> *graph, Graph<T>* rng, size_t u);
 };
 
 #endif //ALGORITHM_GRAPH_ALGORITHM_H
