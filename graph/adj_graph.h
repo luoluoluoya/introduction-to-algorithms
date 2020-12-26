@@ -45,7 +45,7 @@ public:
             if (nodes[i])
                 delete nodes[i];
     }
-    
+
     /**顶点*/
     bool exists(size_t u) const { assert(u < this->nodeNum); return nodes[u]; }
     //插入顶点，返回编号
@@ -121,6 +121,16 @@ public:
         assert(u < this->nodeNum && nodes[u]);
         return nodes[u]->priority;
     }
+    //顶点u在最大流中的高度
+    size_t & height(size_t u) {
+        assert(u < this->nodeNum && nodes[u]);
+        return nodes[u]->h;
+    }
+    //顶点u在最大流中的超额流
+    size_t & excess(size_t u) {
+        assert(u < this->nodeNum && nodes[u]);
+        return nodes[u]->e;
+    }
     /**边：无向边均统一转化为方向互逆的一对有向边**/
     //边(u, v)是否存在
     bool exists(size_t u, size_t v) const {
@@ -162,6 +172,13 @@ public:
         auto p = getEdge(u, v);
         assert(p);
         return p->weight;
+    }
+    //边(u, v)的权重
+    size_t & flow(size_t u, size_t v) {
+        assert(u < this->nodeNum && nodes[u] && v < this->nodeNum && nodes[v]);
+        auto p = getEdge(u, v);
+        assert(p);
+        return p->flow;
     }
 
     /**图的转置**/

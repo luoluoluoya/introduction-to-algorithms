@@ -27,10 +27,12 @@
 template<typename Tv>
 class Graph {
 public:
-    Graph():nodeNum(0),edgeNum(0) {}
+    Graph() : nodeNum(0), edgeNum(0) {}
 
     friend class GraphAlgorithm;
+
     int vSize() const { return nodeNum; }
+
     int eSize() const { return edgeNum; }
 
     /**顶点*/
@@ -47,26 +49,33 @@ public:
     virtual size_t &fTime(size_t) = 0;              //顶点u的时间标签fTime
     virtual int &parent(size_t) = 0;                //顶点u在遍历树中的父亲
     virtual int &priority(size_t) = 0;              //顶点u在遍历树中的优先级数
+    virtual size_t &height(size_t) = 0;             //顶点u在最大流中的高度
+    virtual size_t &excess(size_t) = 0;             //顶点u在最大流中的超额流
     /**边：无向边均统一转化为方向互逆的一对有向边**/
     virtual void remove(size_t, size_t) = 0;        //删除顶点u和u之间的边e，返回该边信息
     virtual EdgeType &type(size_t u, size_t v) = 0; //边(u,v)的类型
     virtual int &weight(size_t u, size_t v) = 0;    //边(u,v)的权重
+    virtual size_t &flow(size_t u, size_t v) = 0;   //边(u,v)上的流
     virtual bool exists(size_t u, size_t v) const = 0;      //边(u,v)是否存在
     virtual void insert(size_t u, size_t v, int w) = 0;     //在顶点u和u之间插入权重为w的边e
 
     /**图的转置**/
-    virtual Graph<Tv>* reverse() = 0;
+    virtual Graph<Tv> *reverse() = 0;
 
     /**打印图的详细信息**/
     void print() {
         printf("=======================================Print Graph Info==========================================\n");
         for (int i = 0; i < nodeNum; ++i) {
             if (exists(i)) {
-                printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d \n", i, inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
+                printf("Node: %d, inDegree: %d, outDegree: %d, parent: %d, dTime: %d, fTime: %d, priority: %d \n", i,
+                       inDegree(i), outDegree(i), parent(i), dTime(i), fTime(i), priority(i));
                 if (outDegree(i)) {
                     for (int j = 0; j < nodeNum; ++j) {
                         if (exists(i, j)) {
-                            const char *etype = type(i, j) == undetermined ? "undetermined" : ( type(i, j) == tree ? "tree" : ( type(i, j) == froward ? "froward" : ( type(i, j) == backword ? "backword" : "cross" ) ) );
+                            const char *etype =
+                                    type(i, j) == undetermined ? "undetermined" : (type(i, j) == tree ? "tree" : (
+                                            type(i, j) == froward ? "froward" : (type(i, j) == backword ? "backword"
+                                                                                                        : "cross")));
                             printf("\t Edge(%d,%d) weight: %d, type: %s \n", i, j, weight(i, j), etype);
                         }
                     }
@@ -75,6 +84,7 @@ public:
         }
         printf("=======================================Print End==========================================\n");
     }
+
 protected:
     size_t nodeNum, edgeNum;    //顶点总数, 边总数
     void reset() {

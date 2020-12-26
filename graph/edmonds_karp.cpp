@@ -7,6 +7,7 @@
  */
 
 #include "init_graph_matrix.h"
+#include "init_graph_flow.h"
 
 
 //残存网络中s->t路径上的残存容量
