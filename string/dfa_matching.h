@@ -22,7 +22,7 @@
  * q1 = &(q0, T[i])  => q1 = f(PqoT[i])
  * 123  ... 123...; q = 3;
  * 123x ... 123a..;
- * a = T[q+1] 时 f(PqT[i]) = q+1;
+ * a = T[q+1] 时 f(PqT[i]) = f(Pqa) = q+1;
  * a != T[q+1] 时，为了继续寻找模式串 P 的前缀与文本串 T[0,i) 的后缀的最长匹配。则需要将范围 f(Pqa)
  *
  * automaton-machine(T, &, m) {
@@ -63,7 +63,7 @@ bool isSuffix(const std::string &pattern, int k, int q, char a) {
 }
 
 // 构造状态转移函数
-int **transitionFunction(const std::string &pattern, const std::vector<char> &characterSet) {
+int **buildTransition(const std::string &pattern, const std::vector<char> &characterSet) {
     int m = pattern.size();
     int **t = new int *[m + 1];                 // 保存前缀的长度
     for (int i = 0; i <= m; ++i) {
@@ -96,7 +96,7 @@ int automatonMachine(const std::string &text, const std::string &pattern) {
                                  'J', 'K', 'L', 'M', 'N', 'Y', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
                                  ' ', ',', '!'};
     int n = text.size(), m = pattern.size(), q = 0;
-    int **t = transitionFunction(pattern, charset);
+    int **t = buildTransition(pattern, charset);
     for (int i = 0; i < n; ++i) {
         int pos = charPos(charset, text[i]);
         if (pos == -1)
