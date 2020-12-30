@@ -49,17 +49,7 @@
 #include <vector>
 #include <set>
 
-/*
-   a b c
-0| 1 0 0 a
-1| 1 2 0 b
-2| 3 0 0 a
-3| 1 4 0 b
-4| 5 0 0 a
-5| 1 4 6 c
-6| 7 0 0 a
-7| 1 2 0
- */
+
 // 判定P[0, k] 是否为 P[0, q)a 的后缀
 bool isSuffix(const std::string &pattern, int k, int q, char a) {
     if (pattern[k--] != a)
@@ -72,6 +62,7 @@ bool isSuffix(const std::string &pattern, int k, int q, char a) {
     return k == -1;
 }
 
+// 构造状态转移函数
 int **transitionFunction(const std::string &pattern, const std::vector<char> &characterSet) {
     int m = pattern.size();
     int **t = new int *[m + 1];                 // 保存前缀的长度
@@ -88,6 +79,7 @@ int **transitionFunction(const std::string &pattern, const std::vector<char> &ch
     return t;
 }
 
+
 int charPos(const std::vector<char> &characterSet, char c) {
     for (int i = 0; i < characterSet.size(); ++i) {
         if (characterSet[i] == c)
@@ -96,13 +88,14 @@ int charPos(const std::vector<char> &characterSet, char c) {
     return -1;
 }
 
+// 自动机
 int automatonMachine(const std::string &text, const std::string &pattern) {
-    std::vector<char> charset = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-                               's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-                               'J', 'K', 'L', 'M', 'N', 'Y', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                               ' ', ',', '!'};
+    std::vector<char> charset = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+                                 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+                                 'I',
+                                 'J', 'K', 'L', 'M', 'N', 'Y', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                                 ' ', ',', '!'};
     int n = text.size(), m = pattern.size(), q = 0;
-//    std::vector<char> charset = {'a', 'b', 'c'};
     int **t = transitionFunction(pattern, charset);
     for (int i = 0; i < n; ++i) {
         int pos = charPos(charset, text[i]);
@@ -115,5 +108,16 @@ int automatonMachine(const std::string &text, const std::string &pattern) {
     return -1;
 }
 
+/*
+       a b c
+    0| 1 0 0 a
+    1| 1 2 0 b
+    2| 3 0 0 a
+    3| 1 4 0 b
+    4| 5 0 0 a
+    5| 1 4 6 c
+    6| 7 0 0 a
+    7| 1 2 0
+ */
 
 #endif //INTRODUCTION_TO_ALGORITHMS_DFA_MATCHING_H
